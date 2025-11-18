@@ -1,33 +1,44 @@
 import { useRef, useState } from 'react';
-import { useRecettes } from '../hooks/useRecettes';
+import { useRecettes } from '../../hooks/useRecettes';
 
 export default function AddRecette({ addRecette: addRecetteProp }) {
   const hook = useRecettes();
   const addRecette = addRecetteProp || hook.addRecette;
 
-  // form.ingredients est un tableau en interne pour faciliter la sélection
-  // form.image contiendra une DataURL (ou null)
-  const [form, setForm] = useState({ name: '', ingredients: [], preparation: [], difficulty: 'facile', preparationTime: '', description: '', image: null, __ingredientsText: '', __stepText: '' });
+  const [form, setForm] = useState({
+    name: '',
+    ingredients: [],
+    preparation: [],
+    difficulty: 'facile',
+    preparationTime: '',
+    description: '',
+    image: null,
+    __ingredientsText: '',
+    __stepText: '',
+  });
+
   const [showIngredientsList, setShowIngredientsList] = useState(false);
   const [showStepsList, setShowStepsList] = useState(false);
+
   const suggestions = ['Tomate', 'Oignon', 'Ail', 'Sel', 'Poivre', 'Beurre', 'Olive', 'Basilic'];
   const stepSuggestions = ['Couper en dés', 'Émincer', 'Faire revenir', 'Mijoter 10 min', 'Assaisonner', 'Cuire 20 min'];
+
   const containerRef = useRef(null);
 
   function handleChange(e) {
-    const { name, value } = e.target;
-    setForm(prev => ({ ...prev, [name]: value }));
+    setForm(prev => ({ ...prev, [e.target.name]: e.target.value }));
   }
 
   function handleIngredientsInputChange(e) {
-    // permet aussi la saisie libre en tant que texte; on ne modifie pas le tableau ici
-    const value = e.target.value;
-    // stocker temporairement la saisie libre dans une clé spéciale
-    setForm(prev => ({ ...prev, __ingredientsText: value }));
+    setForm(prev => ({ ...prev, __ingredientsText: e.target.value }));
   }
 
   function addIngredient(ing) {
-    setForm(prev => ({ ...prev, ingredients: Array.from(new Set([...prev.ingredients, ing])), __ingredientsText: '' }));
+    setForm(prev => ({
+      ...prev,
+      ingredients: Array.from(new Set([...prev.ingredients, ing])),
+      __ingredientsText: '',
+    }));
     setShowIngredientsList(false);
   }
 
@@ -36,13 +47,18 @@ export default function AddRecette({ addRecette: addRecetteProp }) {
   }
 
   function addStep(step) {
-    setForm(prev => ({ ...prev, preparation: [...prev.preparation, step], __stepText: '' }));
+    setForm(prev => ({
+      ...prev,
+      preparation: [...prev.preparation, step],
+      __stepText: '',
+    }));
     setShowStepsList(false);
   }
 
   function handleImageChange(e) {
     const file = e.target.files && e.target.files[0];
     if (!file) return;
+
     const reader = new FileReader();
     reader.onload = () => {
       setForm(prev => ({ ...prev, image: reader.result }));
@@ -55,11 +71,15 @@ export default function AddRecette({ addRecette: addRecetteProp }) {
   }
 
   function removeStep(index) {
-    setForm(prev => ({ ...prev, preparation: prev.preparation.filter((_, i) => i !== index) }));
+    setForm(prev => ({
+      ...prev,
+      preparation: prev.preparation.filter((_, i) => i !== index),
+    }));
   }
 
   function handleSubmit(e) {
     e.preventDefault();
+
     const newRecette = {
       id: Date.now(),
       title: form.name,
@@ -69,138 +89,248 @@ export default function AddRecette({ addRecette: addRecetteProp }) {
       isFavorite: false,
       difficulty: form.difficulty,
       preparationTime: form.preparationTime,
-      description: form.description
+      description: form.description,
     };
+
     addRecette(newRecette);
-    setForm({ name: '', ingredients: [], preparation: [], difficulty: 'facile', preparationTime: '', description: '', image: null, __ingredientsText: '', __stepText: '' });
+
+    setForm({
+      name: '',
+      ingredients: [],
+      preparation: [],
+      difficulty: 'facile',
+      preparationTime: '',
+      description: '',
+      image: null,
+      __ingredientsText: '',
+      __stepText: '',
+    });
   }
 
   return (
-    <form onSubmit={handleSubmit} ref={containerRef}>
-      <label>
-        Image de la recette
-        <div>
-          <input type="file" accept="image/*" onChange={handleImageChange} />
+    <div className="min-h-screen bg-[#F5F4F2] py-10 px-4">
+      <form
+        onSubmit={handleSubmit}
+        ref={containerRef}
+        className="p-8 bg-white shadow-md rounded-md w-full max-w-3xl mx-auto border border-gray-200"
+      >
+
+        {/* IMAGE UPLOAD */}
+        <label className="block mb-6">
+          <div className="mt-2 border-2 border-dashed border-gray-300 rounded-md p-6 text-center bg-gray-50">
+            <input type="file" accept="image/*" onChange={handleImageChange} className="hidden" id="imageUpload" />
+            <label
+              htmlFor="imageUpload"
+              className="cursor-pointer px-4 py-2 rounded-md text-white"
+              style={{ backgroundColor: "#CDA077" }}
+            >
+              Upload Image
+            </label>
+            <p className="text-sm text-gray-500 mt-2">Type d'image accepté : jpg, jpeg et png</p>
+          </div>
+
           {form.image && (
-            <div style={{ marginTop: '8px' }}>
-              <img src={form.image} alt="aperçu" style={{ maxWidth: '200px', display: 'block', marginBottom: '6px' }} />
-              <button type="button" onClick={removeImage}>Supprimer l'image</button>
+            <div className="mt-4">
+              <img
+                src={form.image}
+                alt="preview"
+                className="w-48 rounded-md shadow border mb-3"
+              />
+              <button
+                type="button"
+                onClick={removeImage}
+                className="px-3 py-1 bg-red-500 text-white rounded-md hover:bg-red-600"
+              >
+                Supprimer l'image
+              </button>
+            </div>
+          )}
+        </label>
+
+        {/* NOM */}
+        <label className="block mb-6">
+          <span className="font-medium text-gray-700">Nom</span>
+          <input
+            name="name"
+            type="text"
+            placeholder="Nom" 
+            value={form.name}
+            onChange={handleChange}
+            className="mt-1 w-full border border-gray-300 bg-gray-50 p-3 rounded-md"
+          />
+        </label>
+
+        {/* DIFFICULTÉ + TEMPS */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+          <label className="block">
+            <span className="font-medium text-gray-700">Difficulté</span>
+            <select
+              name="difficulty"
+              value={form.difficulty}
+              onChange={handleChange}
+              className="mt-1 w-full border border-gray-300 bg-gray-50 p-3 rounded-md"
+            >
+              <option value="facile">Facile</option>
+              <option value="moyen">Moyen</option>
+              <option value="difficile">Difficile</option>
+            </select>
+          </label>
+
+          <label className="block">
+            <span className="font-medium text-gray-700">Temps de préparation</span>
+            <input
+              name="preparationTime"
+              type="text"
+              value={form.preparationTime}
+              onChange={handleChange}
+              className="mt-1 w-full border border-gray-300 bg-gray-50 p-3 rounded-md"
+            />
+          </label>
+        </div>
+
+        {/* DESCRIPTION */}
+        <label className="block mb-6">
+          <span className="font-medium text-gray-700">Description</span>
+          <textarea
+            name="description"
+            placeholder="Description"
+            value={form.description}
+            onChange={handleChange}
+            className="mt-1 w-full border border-gray-300 bg-gray-50 p-3 rounded-md h-28"
+          />
+        </label>
+
+        {/* INGREDIENTS */}
+        <div className="mb-6">
+          <span className="font-medium text-gray-700">Ingrédients</span>
+
+          <div className="flex items-center gap-3 mt-2">
+            <input
+              name="__ingredientsText"
+              type="text"
+              value={form.__ingredientsText}
+              onChange={handleIngredientsInputChange}
+              className="flex-1 border border-gray-300 bg-gray-50 p-3 rounded-md"
+            />
+            <button
+              type="button"
+              onClick={() => setShowIngredientsList(s => !s)}
+              className="px-4 py-2 bg-gray-200 rounded-md hover:bg-gray-300"
+              style={{ backgroundColor: "#CDA077" }}
+            >
+              +
+            </button>
+          </div>
+
+          {form.ingredients.length > 0 && (
+            <div className="mt-3 flex flex-wrap gap-2">
+              {form.ingredients.map(i => (
+                <span
+                  key={i}
+                  className="px-3 py-1 bg-[#F5EDE3] text-gray-800 rounded-full flex items-center gap-2 border"
+                >
+                  {i}
+                  <button
+                    type="button"
+                    onClick={() => removeIngredient(i)}
+                    className="text-red-500 hover:text-red-700"
+                  >
+                    ×
+                  </button>
+                </span>
+              ))}
+            </div>
+          )}
+
+          {showIngredientsList && (
+            <div className="border rounded-md p-3 mt-3 bg-gray-50">
+              <strong className="text-gray-700">Suggestions</strong>
+              <ul className="mt-2 grid grid-cols-2 gap-2">
+                {suggestions.map(s => (
+                  <li key={s}>
+                    <button
+                      type="button"
+                      onClick={() => addIngredient(s)}
+                      className="w-full px-3 py-1 bg-gray-200 rounded-md hover:bg-gray-300"
+                    >
+                      {s}
+                    </button>
+                  </li>
+                ))}
+              </ul>
             </div>
           )}
         </div>
-      </label>
-      <br />
-      <label>
-        Nom
-        <input name="name" type="text" value={form.name} onChange={handleChange} />
-      </label>
-      <br />
-      <label>
-        Difficulté
-        <select name="difficulty" value={form.difficulty} onChange={handleChange}>
-            <option value="facile">Facile</option>
-            <option value="moyen">Moyen</option>
-            <option value="difficile">Difficile</option>
-        </select>
-      </label>
-      <br />
-      <label>
-        Temps de préparation
-        <input name="preparationTime" type="text" value={form.preparationTime} onChange={handleChange} />
-      </label>
-      <br />
-      <label>
-        Description
-        <textarea name="description"  value={form.description} onChange={handleChange} />
-      </label>
-      <br />
-      <label>
-        Ingrédients
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-          <input
-            name="__ingredientsText"
-            type="text"
-            placeholder={form.ingredients.length ? form.ingredients.join(', ') : 'Ajouter des ingrédients'}
-            value={form.__ingredientsText || ''}
-            onChange={handleIngredientsInputChange}
-          />
-          <button type="button" onClick={() => setShowIngredientsList(s => !s)}>+</button>
-        </div>
-      </label>
-      {form.ingredients.length > 0 && (
-        <div style={{ marginTop: '6px' }}>
-          <strong>Ingrédients sélectionnés:</strong>
-          <ul>
-            {form.ingredients.map(i => (
-              <li key={i}>
-                {i} <button type="button" onClick={() => removeIngredient(i)}>x</button>
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
 
-      {showIngredientsList && (
-        <div style={{ border: '1px solid #ddd', padding: '8px', marginTop: '6px', maxWidth: '300px' }}>
-          <strong>Suggestions</strong>
-          <ul>
-            {suggestions.map(s => (
-              <li key={s}>
-                <button type="button" onClick={() => addIngredient(s)}>{s}</button>
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
+        {/* ETAPES */}
+        <div className="mb-6">
+          <span className="font-medium text-gray-700">Étapes</span>
 
-      <br />
-      <label>
-        Étapes de préparation
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-          <input
-            name="__stepText"
-            type="text"
-            placeholder={form.preparation.length ? `Étapes: ${form.preparation.length}` : 'Ajouter une étape'}
-            value={form.__stepText || ''}
-            onChange={e => setForm(prev => ({ ...prev, __stepText: e.target.value }))}
-          />
-          <button type="button" onClick={() => {
-            const text = (form.__stepText || '').trim();
-            if (text) addStep(text);
-          }}>Ajouter</button>
-          <button type="button" onClick={() => setShowStepsList(s => !s)}>+</button>
-        </div>
-      </label>
+          <div className="flex items-center gap-3 mt-2">
+            <input
+              name="__stepText"
+              type="text"
+              value={form.__stepText}
+              onChange={e => setForm(prev => ({ ...prev, __stepText: e.target.value }))}
+              className="flex-1 border border-gray-300 bg-gray-50 p-3 rounded-md"
+            />
 
-      {form.preparation.length > 0 && (
-        <div style={{ marginTop: '6px' }}>
-          <strong>Étapes:</strong>
-          <ol>
-            {form.preparation.map((st, idx) => (
-              <li key={idx}>
-                {st} <button type="button" onClick={() => removeStep(idx)}>x</button>
-              </li>
-            ))}
-          </ol>
-        </div>
-      )}
+            <button
+              type="button"
+              onClick={() => setShowStepsList(s => !s)}
+              className="px-4 py-2 bg-gray-200 rounded-md hover:bg-gray-300"
+              style={{ backgroundColor: "#CDA077" }}
+            >
+              +
+            </button>
+          </div>
 
-      {showStepsList && (
-        <div style={{ border: '1px solid #ddd', padding: '8px', marginTop: '6px', maxWidth: '300px' }}>
-          <strong>Suggestions d'étapes</strong>
-          <ul>
-            {stepSuggestions.map(s => (
-              <li key={s}>
-                <button type="button" onClick={() => addStep(s)}>{s}</button>
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
+          {form.preparation.length > 0 && (
+            <ol className="list-decimal ml-6 mt-3 space-y-1">
+              {form.preparation.map((st, idx) => (
+                <li key={idx}>
+                  {st}
+                  <button
+                    type="button"
+                    onClick={() => removeStep(idx)}
+                    className="ml-2 text-red-500 hover:text-red-700"
+                  >
+                    ×
+                  </button>
+                </li>
+              ))}
+            </ol>
+          )}
 
-      
-      <br />
-      <button type="submit">Sauvegarder</button>
-    </form>
+          {showStepsList && (
+            <div className="border rounded-md p-3 mt-3 bg-gray-50">
+              <strong className="text-gray-700">Suggestions d'étapes</strong>
+              <ul className="mt-2 grid grid-cols-1 gap-2">
+                {stepSuggestions.map(s => (
+                  <li key={s}>
+                    <button
+                      type="button"
+                      onClick={() => addStep(s)}
+                      className="w-full px-3 py-1 bg-gray-200 rounded-md hover:bg-gray-300"
+                    >
+                      {s}
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </div>
+
+        {/* SUBMIT */}
+        <button
+          type="submit"
+          className="w-full mt-6 text-white py-3 rounded-md font-medium shadow"
+          style={{ backgroundColor: "#CDA077" }}
+        >
+          Sauvegarder
+        </button>
+      </form>
+    </div>
   );
 }
