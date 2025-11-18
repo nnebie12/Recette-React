@@ -1,16 +1,12 @@
 import { useEffect, useRef, useState } from 'react';
 
 // Ce hook charge les recettes depuis localStorage si présentes,
-// sinon tente de charger `/recettes.json` depuis le dossier `public` (fallback).
-// Il sauvegarde ensuite les recettes dans localStorage à chaque changement
-// (en évitant d'écraser pendant la phase de chargement initial).
 const STORAGE_KEY = 'recettes_v1';
 
 export function useRecettes() {
   const [recettes, setRecettes] = useState([]);
   const isInitial = useRef(true);
 
-  // Chargement au montage : localStorage -> fallback fetch('/recettes.json')
   useEffect(() => {
     let cancelled = false;
 
