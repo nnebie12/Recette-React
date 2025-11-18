@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
+import menu1 from './assets/menu1.png';
 import viteLogo from '/vite.svg'
 import './App.css'
 import { useRecettes } from './hooks/useRecettes';
@@ -18,47 +18,36 @@ function App() {
   }
 
   return (
-    <>
+    <div className="recette-app container p-4">
+      <h1 className="text-3xl font-bold underline">Hello world!</h1>
 
-      <div className="recette-app container p-4">
-          <h1>Mes recettes</h1>
-          <section className="mb-6">
-            <AddRecette addRecette={addRecette} />
-          </section>
-
-          <section>
-          <h1 class="text-3xl font-bold underline">
-          Hello world!
-          </h1>
-            {recettes.length === 0 && <div>Aucune recette pour l'instant.</div>}
-            <ul>
-              {recettes.map(r => (
-                <li key={r.id} className="recette-item mb-4 border p-3">
-                  {editingId === r.id ? (
-                    <EdditRecette recette={r} onSave={handleSaveEdit} onCancel={() => setEditingId(null)} />
-                  ) : (
-                    <div>
-                      <div className="flex justify-between items-start">
-                        <div>
-                          <h3>{r.title}</h3>
-                          <div className="text-sm text-gray-600">{(r.ingredients || []).join(', ')}</div>
-                        </div>
-                        <div className="space-x-2">
-                          <button onClick={() => toggleFavorite(r.id)}>{r.isFavorite ? '★' : '☆'}</button>
-                          <button onClick={() => setEditingId(r.id)}>Éditer</button>
-                          <RemoveRecette id={r.id} onRemove={() => removeRecette(r.id)} />
-                        </div>
-                      </div>
-                      <p className="mt-2">{r.preparation}</p>
-                    </div>
-                  )}
-                </li>
-              ))}
-            </ul>
-          </section>
-        </div>
-    </>
-  )
+      <AddRecette addRecette={addRecette} />
+      <ul style={{ listStyle: 'none', padding: 0, marginTop: 20 }}>
+        {recettes.map(r => (
+          <li key={r.id} style={{ marginBottom: 12 }}>
+            <div
+              className="recette-item"
+              style={{
+                position: 'relative',
+                borderRadius: 8,
+                overflow: 'hidden',
+                minHeight: 100,
+                backgroundImage: `url(${menu1})`,
+                backgroundSize: 'cover',
+                backgroundPosition: 'center'
+              }}
+            >
+              <div style={{ position: 'relative', zIndex: 1, padding: 12, color: '#fff' }}>
+                <strong style={{ display: 'block', fontSize: 18 }}>{r.title || r.name}</strong>
+                <div style={{ fontSize: 12, marginTop: 6 }}>{(r.ingredients || []).join(', ')}</div>
+                <div style={{ marginTop: 8, fontSize: 12 }}>{r.preparationTime ? `Temps: ${r.preparationTime}` : ''}</div>
+              </div>
+            </div>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
 }
 
 export default App

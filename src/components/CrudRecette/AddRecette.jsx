@@ -1,5 +1,6 @@
+// ...existing code...
 import { useRef, useState } from 'react';
-import { useRecettes } from '../hooks/useRecettes';
+import { useRecettes } from '../../hooks/useRecettes';
 
 export default function AddRecette({ addRecette: addRecetteProp }) {
   const hook = useRecettes();
@@ -20,9 +21,7 @@ export default function AddRecette({ addRecette: addRecetteProp }) {
   }
 
   function handleIngredientsInputChange(e) {
-    // permet aussi la saisie libre en tant que texte; on ne modifie pas le tableau ici
     const value = e.target.value;
-    // stocker temporairement la saisie libre dans une clé spéciale
     setForm(prev => ({ ...prev, __ingredientsText: value }));
   }
 
@@ -60,19 +59,39 @@ export default function AddRecette({ addRecette: addRecetteProp }) {
 
   function handleSubmit(e) {
     e.preventDefault();
+
+    if (!form.name.trim()) {
+      console.warn('Nom requis');
+      return;
+    }
+
     const newRecette = {
-      id: Date.now(),
-      title: form.name,
+      id: Date.now().toString(),
+      title: form.name.trim(),
       ingredients: form.ingredients,
       preparation: form.preparation,
-      image: form.image || null,
-      isFavorite: false,
       difficulty: form.difficulty,
       preparationTime: form.preparationTime,
-      description: form.description
+      description: form.description,
+      image: form.image || null,
+      isFavorite: false,
+      createdAt: new Date().toISOString()
     };
-    addRecette(newRecette);
+
+    if (typeof addRecette === 'function') {
+      addRecette(newRecette);
+    } else {
+      console.warn('addRecette unavailable', addRecette);
+    }
+
     setForm({ name: '', ingredients: [], preparation: [], difficulty: 'facile', preparationTime: '', description: '', image: null, __ingredientsText: '', __stepText: '' });
+    setShowIngredientsList(false);
+    setShowStepsList(false);
+
+    if (containerRef.current) {
+      const input = containerRef.current.querySelector('input[name="name"]');
+      if (input) input.focus();
+    }
   }
 
   return (
@@ -98,9 +117,9 @@ export default function AddRecette({ addRecette: addRecetteProp }) {
       <label>
         Difficulté
         <select name="difficulty" value={form.difficulty} onChange={handleChange}>
-            <option value="facile">Facile</option>
-            <option value="moyen">Moyen</option>
-            <option value="difficile">Difficile</option>
+          <option value="facile">Facile</option>
+          <option value="moyen">Moyen</option>
+          <option value="difficile">Difficile</option>
         </select>
       </label>
       <br />
@@ -111,7 +130,7 @@ export default function AddRecette({ addRecette: addRecetteProp }) {
       <br />
       <label>
         Description
-        <textarea name="description"  value={form.description} onChange={handleChange} />
+        <textarea name="description" value={form.description} onChange={handleChange} />
       </label>
       <br />
       <label>
@@ -198,9 +217,9 @@ export default function AddRecette({ addRecette: addRecetteProp }) {
         </div>
       )}
 
-      
       <br />
       <button type="submit">Sauvegarder</button>
     </form>
   );
 }
+// ...existing code...
