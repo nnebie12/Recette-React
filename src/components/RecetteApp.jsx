@@ -3,6 +3,7 @@ import { useRecettes } from '../hooks/useRecettes';
 import AddRecette from './AddRecette';
 import EdditRecette from './EdditRecette';
 import RemoveRecette from './RemoveRecette';
+import RecipeFilter from './filtreRecette';
 
 export default function RecetteApp() {
   const { recettes, addRecette, removeRecette, updateRecette, toggleFavorite } = useRecettes();
@@ -13,12 +14,17 @@ export default function RecetteApp() {
     setEditingId(null);
   }
 
+
   return (
+    
     <div className="recette-app container p-4">
       <h1>Mes recettes</h1>
       <section className="mb-6">
         <AddRecette addRecette={addRecette} />
       </section>
+      <div>
+      <RecipeFilter />
+    </div>
 
       <section>
         {recettes.length === 0 && <div>Aucune recette pour l'instant.</div>}
