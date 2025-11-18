@@ -1,6 +1,4 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
 import { useRecettes } from './hooks/useRecettes';
 import AddRecette from './components/CrudRecette/AddRecette';
@@ -8,7 +6,7 @@ import EdditRecette from './components/CrudRecette/EditRecette';
 import RemoveRecette from './components/CrudRecette/RemoveRecette';
 import RecipeFilter from './components/filtreRecette';
 function App() {
-  const [count, setCount] = useState(0)
+  //const [count, setCount] = useState(0)
   const { recettes, addRecette, removeRecette, updateRecette, toggleFavorite } = useRecettes();
   const [editingId, setEditingId] = useState(null);
 
@@ -28,9 +26,6 @@ function App() {
           </section>
 
           <section>
-          <h1 class="text-3xl font-bold underline">
-          Hello world!
-          </h1>
             {recettes.length === 0 && <div>Aucune recette pour l'instant.</div>}
             <ul>
               {recettes.map(r => (
