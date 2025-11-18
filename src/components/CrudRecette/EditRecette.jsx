@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-export default function EdditRecette({ recette, onSave, onCancel }) {
+export default function EditRecette({ recette, onSave, onCancel }) {
 	const [form, setForm] = useState({ title: recette?.title || '', preparation: recette?.preparation || '' });
 
 	function handleChange(e) {
