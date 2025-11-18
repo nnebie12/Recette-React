@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { useRecettes } from '../hooks/useRecettes';
-import '../styles/TodoApp.css';
 import AddRecette from './AddRecette';
 import EdditRecette from './EdditRecette';
 import RemoveRecette from './RemoveRecette';
