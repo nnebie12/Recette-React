@@ -79,6 +79,15 @@ function toggleFavorite(id) {
 - Gardez l'état minimal : dérivez ce qui peut l'être (par ex. filtres).
 - Utilisez `useEffect` pour synchroniser l'état avec le localStorage si nécessaire.
 
+Note sur la persistance
+----------------------
+
+Ce projet utilise la clé localStorage `recettes_v1` pour sauvegarder la liste des recettes.
+Au démarrage, le hook `useRecettes` tente d'abord de charger les données depuis `localStorage`.
+S'il n'y a pas de données persistées, il tente de charger un fichier `public/recettes.json` comme
+fallback (utile pour fournir un jeu d'exemples). Les modifications ultérieures sont automatiquement
+enregistrées dans `localStorage`.
+
 6) Exemple combiné minimal
 
 // ...existing code...
