@@ -5,6 +5,9 @@ import AddRecette from './components/CrudRecette/AddRecette';
 import EdditRecette from './components/CrudRecette/EditRecette';
 import RemoveRecette from './components/CrudRecette/RemoveRecette';
 import RecipeFilter from './components/filtreRecette';
+import NavBar from './components/Layout/NavBar';
+
+// ...existing code...
 function App() {
   //const [count, setCount] = useState(0)
   const { recettes, addRecette, removeRecette, updateRecette, toggleFavorite } = useRecettes();
@@ -17,7 +20,8 @@ function App() {
 
   return (
     <>
-    <RecipeFilter/>
+  <NavBar />
+  <RecipeFilter />
 
       <div className="recette-app container p-4">
           <h1>Mes recettes</h1>
