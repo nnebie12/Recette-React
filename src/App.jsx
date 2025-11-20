@@ -5,6 +5,8 @@ import AddRecette from './components/CrudRecette/AddRecette';
 import EdditRecette from './components/CrudRecette/EditRecette';
 import RemoveRecette from './components/CrudRecette/RemoveRecette';
 import NavBar from './components/Layout/NavBar';
+import Card from './components/Card/Card';
+import Layout from './components/Layout/wrapper';  
 
 function App() {
   //const [count, setCount] = useState(0)
@@ -19,7 +21,9 @@ function App() {
   return (
     <>
       <NavBar />
-
+        <Layout>
+          <Card />
+        </Layout>
       <div className="recette-app container p-4">
           <h1>Mes recettes</h1>
           <section className="mb-6">

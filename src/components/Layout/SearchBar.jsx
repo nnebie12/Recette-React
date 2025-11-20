@@ -2,7 +2,7 @@ import { Search } from "lucide-react";
 import { Funnel } from 'lucide-react';
 
 
-export default function SearchBar({ value, onChange }) {
+function SearchBar({ value, onChange }) {
     function handleInputChange(e) {
         if (onChange) onChange(e.target.value);
     }
@@ -28,5 +28,7 @@ export default function SearchBar({ value, onChange }) {
                    fill="currentColor" />
             </span>
         </div>
-    );
+    );   
 }
+
+export default SearchBar;
