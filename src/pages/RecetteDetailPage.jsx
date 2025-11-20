@@ -1,8 +1,7 @@
-import React from 'react';
 import { useParams } from 'react-router-dom';
-import { useRecettes } from '../hooks/useRecettes';
 import DetailRecette from '../components/RecetteDetails/DetailRecette';
 import BackButton from '../components/common/BackButton';
+import { useRecettes } from '../hooks/useRecettes';
 
 export default function RecetteDetailPage() {
   const { id } = useParams();

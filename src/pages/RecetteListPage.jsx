@@ -1,7 +1,6 @@
-import React from 'react';
-import { useRecettes } from '../hooks/useRecettes';
-import RemoveRecette from '../components/CrudRecette/RemoveRecette';
 import { useNavigate } from 'react-router-dom';
+import RemoveRecette from '../components/CrudRecette/RemoveRecette';
+import { useRecettes } from '../hooks/useRecettes';
 
 export default function RecetteListPage() {
   const { recettes, removeRecette, toggleFavorite } = useRecettes();
