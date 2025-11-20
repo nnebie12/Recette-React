@@ -8,6 +8,10 @@ import NavBar from './components/Layout/NavBar';
 import Card from './components/Card/Card';
 import Layout from './components/Layout/wrapper';  
 
+import RecipeFilter from './components/filtreRecette';
+import NavBar from './components/Layout/NavBar';
+
+// ...existing code...
 function App() {
   //const [count, setCount] = useState(0)
   const { recettes, addRecette, removeRecette, updateRecette, toggleFavorite } = useRecettes();
@@ -24,6 +28,9 @@ function App() {
         <Layout>
           <Card />
         </Layout>
+    <RecipeFilter/>
+
+
       <div className="recette-app container p-4">
           <h1>Mes recettes</h1>
           <section className="mb-6">
