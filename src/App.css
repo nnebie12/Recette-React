@@ -1,8 +1,6 @@
 #root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+  margin: 0;
+  width: 100vw;
 }
 
 .logo {
@@ -41,11 +39,107 @@
   color: #888;
 }
 
-.recette-app {
-  background-image: url('/assets/menu.png');
+.recette-grid {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+
+/* 卡片外框 */
+.recette-item {
+  display: block;
+}
+
+/* 卡片整体 */
+.recette-card {
+  background: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+/* 图片区域：拉伸并占据顶部，宽度自适应列 */
+.recette-card-image {
+  width: 100%;
+  height: 220px;
+  /* 改这里可以调整图片高度 */
   background-size: cover;
   background-position: center;
-  background-repeat: no-repeat;
+  flex-shrink: 0;
+}
 
-  padding: 1.5rem;
+/* 内容区 */
+.recette-card-body {
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  justify-content: space-between;
+}
+
+.recette-card-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.recette-card-title {
+  font-size: 1.35rem;
+  /* 更大的标题 */
+  margin: 0 0 6px;
+  color: #111;
+  text-shadow: none;
+}
+
+.recette-card-ingredients {
+  font-size: 13px;
+  color: #666;
+}
+
+/* 按钮组与样式 */
+.recette-card-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.recette-card-actions button {
+  font-size: 13px;
+  padding: 6px 8px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+}
+
+/* 详情区域 */
+.recette-card-detail {
+  margin-top: 10px;
+  font-size: 14px;
+  color: #333;
+  background: rgba(0, 0, 0, 0.02);
+  padding: 10px;
+  border-radius: 6px;
+}
+
+/* 响应式：2 列 / 1 列 */
+@media (max-width: 1000px) {
+  .recette-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 700px) {
+  .recette-grid {
+    grid-template-columns: repeat(1, 1fr);
+  }
+
+  .recette-card-image {
+    height: 240px;
+  }
 }
