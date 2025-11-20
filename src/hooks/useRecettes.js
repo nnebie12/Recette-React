@@ -4,7 +4,11 @@ import { useEffect, useRef, useState } from 'react';
 const STORAGE_KEY = 'recettes_v1';
 
 export function useRecettes() {
-  const [recettes, setRecettes] = useState([]);
+  const [recettes, setRecettes] = useState([
+    // test
+        { id: 1, title: "Tarte aux pommes", isFavorite: false },
+
+  ]);
   const isInitial = useRef(true);
 
   useEffect(() => {
