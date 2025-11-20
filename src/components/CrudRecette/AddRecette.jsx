@@ -1,3 +1,4 @@
+// ...existing code...
 import { useRef, useState } from 'react';
 import { useRecettes } from '../../hooks/useRecettes';
 
@@ -30,7 +31,8 @@ export default function AddRecette({ addRecette: addRecetteProp }) {
   }
 
   function handleIngredientsInputChange(e) {
-    setForm(prev => ({ ...prev, __ingredientsText: e.target.value }));
+    const value = e.target.value;
+    setForm(prev => ({ ...prev, __ingredientsText: value }));
   }
 
   function addIngredient(ing) {
@@ -81,12 +83,10 @@ export default function AddRecette({ addRecette: addRecetteProp }) {
     e.preventDefault();
 
     const newRecette = {
-      id: Date.now(),
-      title: form.name,
+      id: Date.now().toString(),
+      title: form.name.trim(),
       ingredients: form.ingredients,
       preparation: form.preparation,
-      image: form.image || null,
-      isFavorite: false,
       difficulty: form.difficulty,
       preparationTime: form.preparationTime,
       description: form.description,
