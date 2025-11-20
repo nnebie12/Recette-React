@@ -4,11 +4,13 @@ import { useRecettes } from './hooks/useRecettes';
 import AddRecette from './components/CrudRecette/AddRecette';
 import EdditRecette from './components/CrudRecette/EditRecette';
 import RemoveRecette from './components/CrudRecette/RemoveRecette';
+import DetailRecette from './components/RecetteDetails/DetailRecette';
 
 function App() {
   //const [count, setCount] = useState(0)
   const { recettes, addRecette, removeRecette, updateRecette, toggleFavorite } = useRecettes();
   const [editingId, setEditingId] = useState(null);
+  const [detailId, setDetailId] = useState(null);
 
   function handleSaveEdit(updated) {
     updateRecette(updated);
@@ -41,12 +43,14 @@ function App() {
                         <div className="space-x-2">
                           <button onClick={() => toggleFavorite(r.id)}>{r.isFavorite ? '★' : '☆'}</button>
                           <button onClick={() => setEditingId(r.id)}>Éditer</button>
+                          <button onClick={() => setDetailId(detailId === r.id ? null : r.id)}>{detailId === r.id ? 'Masquer détails' : 'Voir détails'}</button>
                           <RemoveRecette id={r.id} onRemove={() => removeRecette(r.id)} />
                         </div>
                       </div>
-                      <p className="mt-2">{r.preparation}</p>
+                      <p className="mt-2">{Array.isArray(r.preparation) ? r.preparation.join(' / ') : r.preparation}</p>
                     </div>
                   )}
+                  {detailId === r.id && <DetailRecette recette={r} />}
                 </li>
               ))}
             </ul>
