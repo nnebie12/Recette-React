@@ -29,8 +29,7 @@ function App() {
           <Card />
         </Layout>
     <RecipeFilter/>
-  <NavBar />
-  <RecipeFilter />
+
 
       <div className="recette-app container p-4">
           <h1>Mes recettes</h1>
