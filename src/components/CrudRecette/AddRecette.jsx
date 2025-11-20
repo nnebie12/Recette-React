@@ -1,9 +1,13 @@
 import { useRef, useState } from 'react';
 import { useRecettes } from '../../hooks/useRecettes';
+import { useNavigate } from 'react-router-dom';
+ import NavBar from '../Layout/NavBar';
+
 
 export default function AddRecette({ addRecette: addRecetteProp }) {
   const hook = useRecettes();
   const addRecette = addRecetteProp || hook.addRecette;
+  const navigate = useNavigate();
 
   const [form, setForm] = useState({
     name: '',
@@ -24,6 +28,7 @@ export default function AddRecette({ addRecette: addRecetteProp }) {
   const stepSuggestions = ['Couper en dés', 'Émincer', 'Faire revenir', 'Mijoter 10 min', 'Assaisonner', 'Cuire 20 min'];
 
   const containerRef = useRef(null);
+  const [toast, setToast] = useState('');
 
   function handleChange(e) {
     setForm(prev => ({ ...prev, [e.target.name]: e.target.value }));
@@ -93,6 +98,12 @@ export default function AddRecette({ addRecette: addRecetteProp }) {
     };
 
     addRecette(newRecette);
+    // afficher toast puis rediriger
+    setToast('Recette créée');
+    setTimeout(() => {
+      setToast('');
+      navigate('/');
+    }, 1400);
 
     setForm({
       name: '',
@@ -108,7 +119,21 @@ export default function AddRecette({ addRecette: addRecetteProp }) {
   }
 
   return (
+
+    <div className="min-h-screen bg-gray-50">
+      {/* NavBar */}
+      <NavBar />
+      
     <div className="min-h-screen bg-[#F5F4F2] py-10 px-4">
+      {toast && (
+        <div
+          role="status"
+          className="fixed right-6 top-6 bg-black text-white px-4 py-2 rounded-md shadow-md"
+          style={{ opacity: 0.95 }}
+        >
+          {toast}
+        </div>
+      )}
       <form
         onSubmit={handleSubmit}
         ref={containerRef}
@@ -331,6 +356,7 @@ export default function AddRecette({ addRecette: addRecetteProp }) {
           Sauvegarder
         </button>
       </form>
+    </div>
     </div>
   );
 }

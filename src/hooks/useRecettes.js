@@ -54,19 +54,35 @@ export function useRecettes() {
   }, [recettes]);
 
   function addRecette(r) {
-    setRecettes(prev => [...prev, r]);
+    setRecettes(prev => {
+      const next = [...prev, r];
+      try { localStorage.setItem(STORAGE_KEY, JSON.stringify(next)); } catch (e) { console.warn('localStorage write error', e); }
+      return next;
+    });
   }
 
   function removeRecette(id) {
-    setRecettes(prev => prev.filter(r => r.id !== id));
+    setRecettes(prev => {
+      const next = prev.filter(r => r.id !== id);
+      try { localStorage.setItem(STORAGE_KEY, JSON.stringify(next)); } catch (e) { console.warn('localStorage write error', e); }
+      return next;
+    });
   }
 
   function updateRecette(updated) {
-    setRecettes(prev => prev.map(r => r.id === updated.id ? { ...r, ...updated } : r));
+    setRecettes(prev => {
+      const next = prev.map(r => r.id === updated.id ? { ...r, ...updated } : r);
+      try { localStorage.setItem(STORAGE_KEY, JSON.stringify(next)); } catch (e) { console.warn('localStorage write error', e); }
+      return next;
+    });
   }
 
   function toggleFavorite(id) {
-    setRecettes(prev => prev.map(r => r.id === id ? { ...r, isFavorite: !r.isFavorite } : r));
+    setRecettes(prev => {
+      const next = prev.map(r => r.id === id ? { ...r, isFavorite: !r.isFavorite } : r);
+      try { localStorage.setItem(STORAGE_KEY, JSON.stringify(next)); } catch (e) { console.warn('localStorage write error', e); }
+      return next;
+    });
   }
 
   return { recettes, addRecette, removeRecette, updateRecette, toggleFavorite };
