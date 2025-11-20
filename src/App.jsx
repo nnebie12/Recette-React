@@ -4,6 +4,7 @@ import { useRecettes } from './hooks/useRecettes';
 import AddRecette from './components/CrudRecette/AddRecette';
 import EdditRecette from './components/CrudRecette/EditRecette';
 import RemoveRecette from './components/CrudRecette/RemoveRecette';
+import NavBar from './components/Layout/NavBar';
 
 function App() {
   //const [count, setCount] = useState(0)
@@ -17,6 +18,7 @@ function App() {
 
   return (
     <>
+      <NavBar />
 
       <div className="recette-app container p-4">
           <h1>Mes recettes</h1>
