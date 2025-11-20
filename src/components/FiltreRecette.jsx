@@ -45,11 +45,26 @@ export default function RecipeFilter() {
   });
 
   return (
+    
     <div className="min-h-screen bg-gray-50 p-6">
+        {/* Barre de recherche */}
+      <div className="mb-8">
+        <div className="relative">
+          <Search className="absolute left-3 top-3 w-5 h-5 text-gray-400" />
+          <input
+            type="text"
+            placeholder="Rechercher une recette..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-400"
+          />
+        </div>
+      </div>
       {/* Filtre de catégories */}
       <div className="mb-8">
         <h2 className="text-2xl font-bold mb-4 text-gray-800">Catégories</h2>
         <div className="flex items-center gap-4 flex-wrap">
+            
           {/* Add button */}
           <button
             onClick={handleAddCategory}
@@ -88,19 +103,7 @@ export default function RecipeFilter() {
         </div>
       </div>
 
-      {/* Barre de recherche */}
-      <div className="mb-8">
-        <div className="relative">
-          <Search className="absolute left-3 top-3 w-5 h-5 text-gray-400" />
-          <input
-            type="text"
-            placeholder="Rechercher une recette..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-400"
-          />
-        </div>
-      </div>
+      
 
       {/* Liste des recettes */}
       <div className="mb-8">
