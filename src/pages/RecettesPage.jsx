@@ -1,13 +1,15 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { Plus } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useRecettes } from '../hooks/useRecettes';
 import FavoriteButton from '../components/Card/FavoriteButton';
 import NavBar from '../components/Layout/NavBar';
+import { AppContext } from '../context/appContext';
 
 export default function RecettesPage() {
   const navigate = useNavigate();
   const { recettes, toggleFavorite } = useRecettes();
+  const { isDark } = useContext(AppContext);
 
   const [categories] = useState([
     { id: "all", name: "Tous" },
@@ -39,14 +41,16 @@ export default function RecettesPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 dark:bg-stone-900 transition-colors duration-500">
       {/* NavBar */}
-      {<NavBar searchTerm={searchTerm} onSearchChange={setSearchTerm} />}
+      <NavBar searchTerm={searchTerm} onSearchChange={setSearchTerm} />
 
       <div className="p-6">
         {/* Catégories */}
         <div className="mb-8">
-          <h2 className="text-2xl font-bold mb-4 text-gray-800">Catégories</h2>
+          <h2 className="text-2xl font-bold mb-4 text-gray-800 dark:text-gray-100">
+            Catégories
+          </h2>
 
           <div className="flex items-center gap-4 flex-wrap">
             {/* Bouton + pour ajouter une recette */}
@@ -68,10 +72,14 @@ export default function RecettesPage() {
                   className={`px-5 py-2.5 rounded-full font-medium transition-all duration-200 whitespace-nowrap ${
                     activeCategory === category.id
                       ? "text-white shadow-sm"
-                      : "text-gray-600 border border-gray-200 hover:border-gray-300 hover:shadow-sm"
+                      : "text-gray-600 dark:text-gray-300 border border-gray-200 dark:border-gray-600 hover:border-gray-300 dark:hover:border-gray-500 hover:shadow-sm"
                   }`}
                   style={{
-                    backgroundColor: activeCategory === category.id ? "#CDA077" : "white",
+                    backgroundColor: activeCategory === category.id 
+                      ? "#CDA077" 
+                      : isDark 
+                      ? "#374151" 
+                      : "white",
                   }}
                 >
                   <span className="font-medium">{category.name}</span>
@@ -86,7 +94,7 @@ export default function RecettesPage() {
 
         {/* Liste des recettes en Cards */}
         <div className="mb-8">
-          <h3 className="text-xl font-bold mb-4 text-gray-800">
+          <h3 className="text-xl font-bold mb-4 text-gray-800 dark:text-gray-100">
             Recettes ({filteredRecettes.length})
           </h3>
 
@@ -95,11 +103,11 @@ export default function RecettesPage() {
               {filteredRecettes.map((recette) => (
                 <div
                   key={recette.id}
-                  className="rounded-xl shadow-lg aspect-square p-3 grid gap-2 align-items-center relative overflow-hidden cursor-pointer hover:scale-105 transition-transform"
+                  className="rounded-xl shadow-lg dark:shadow-2xl aspect-square p-3 grid gap-2 align-items-center relative overflow-hidden cursor-pointer hover:scale-105 transition-transform"
                 >
                   {/* Image de fond */}
                   <div
-                    className="absolute inset-0 bg-cover bg-center brightness-70"
+                    className="absolute inset-0 bg-cover bg-center brightness-70 dark:brightness-60"
                     style={{
                       backgroundImage: recette.image
                         ? `url(${recette.image})`
@@ -125,7 +133,7 @@ export default function RecettesPage() {
                     </div>
 
                     {/* Titre de la recette */}
-                    <h3 className="text-white grow font-bold text-lg mt-2 items-center my-auto">
+                    <h3 className="text-white grow font-bold text-lg mt-2 items-center my-auto drop-shadow-lg">
                       {recette.title}
                     </h3>
                   </div>
@@ -133,7 +141,7 @@ export default function RecettesPage() {
               ))}
             </div>
           ) : (
-            <div className="text-center py-12 text-gray-500">
+            <div className="text-center py-12 text-gray-500 dark:text-gray-400">
               <p className="text-lg">Aucune recette trouvée</p>
               <button
                 onClick={() => navigate("/ajouter")}

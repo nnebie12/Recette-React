@@ -13,12 +13,11 @@ export default function DetailRecette() {
   const [showEditModal, setShowEditModal] = useState(false);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
 
-  // Dériver la recette depuis la liste (évite setState synchrone dans un effet)
+  // Dériver la recette depuis la liste 
   const recette = useMemo(() => recettes.find(r => r.id === Number(id)) || null, [id, recettes]);
 
   // Gestion de la sauvegarde après édition
   function handleSave(updatedRecette) {
-    // Adapter les noms de champs de EditRecette vers le format attendu
     const recetteFormatee = {
       ...updatedRecette,
       name: updatedRecette.name || updatedRecette.title,
