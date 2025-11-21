@@ -34,15 +34,13 @@ export default function RecipeFilter() {
 
       {/* Catégories */}
       <div className="mb-8">
-        <h2 className="text-2xl font-bold mb-4 text-gray-800">Catégories</h2>
-
         <div className="flex items-center gap-4 flex-wrap">
 
           {/* Bouton + → redirection */}
           <button
-            onClick={() => navigate("/ajouter")}
-            className="flex items-center justify-center w-11 h-11 rounded-lg transition-all duration-200 hover:shadow-md active:scale-95"
-            style={{ backgroundColor: "#CDA077" }}
+            onClick={handleAddCategory}
+            className="flex p-0 bg-gold-custom items-center justify-center w-11 h-11 rounded-lg transition-all duration-200 hover:shadow-md active:scale-95 "
+            aria-label="Add new category"
           >
             <Plus className="w-6 h-6 text-white font-bold" strokeWidth={3} />
           </button>
@@ -97,6 +95,51 @@ export default function RecipeFilter() {
           <div className="text-center py-8 text-gray-500">Aucune recette trouvée</div>
         )}
       </div>
+
+      {/* Modal d'ajout de catégorie */}
+      {showModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+          <div className="bg-white rounded-lg shadow-lg max-w-sm w-full p-6">
+            <div className="flex justify-between items-center mb-4">
+              <h3 className="text-xl font-bold text-gray-800">Ajouter une catégorie</h3>
+              <button
+                onClick={() => setShowModal(false)}
+                className="text-gray-400 hover:text-gray-600"
+              >
+                <X className="w-6 h-6" />
+              </button>
+            </div>
+
+            <input
+              type="text"
+              placeholder="Nom de la catégorie"
+              value={newCategoryName}
+              onChange={(e) => setNewCategoryName(e.target.value)}
+              onKeyPress={(e) => e.key === "Enter" && handleCreateCategory()}
+              className="w-full px-4 py-2.5 border border-gray-200 rounded-lg mb-4 focus:outline-none focus:ring-2 focus:gold-custom"
+              autoFocus
+            />
+
+            <div className="flex gap-3">
+              <button
+                onClick={() => setShowModal(false)}
+                className="flex-1 px-4 py-2.5 border border-gray-200 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
+              >
+                Annuler
+              </button>
+              <button
+                onClick={handleCreateCategory}
+                className="flex-1 px-4 py-2.5 text-white rounded-lg transition-colors"
+                style={{
+                  backgroundColor: "var(--recipe-filter-accent)",
+                }}
+              >
+                Ajouter
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

@@ -1,26 +1,27 @@
-//import { useState } from 'react';
-import './App.css';
-import Card from './components/Card/Card';
-import AddRecette from './components/CrudRecette/AddRecette';
-import EdditRecette from './components/CrudRecette/EditRecette';
-import RemoveRecette from './components/CrudRecette/RemoveRecette';
-import NavBar from './components/Layout/NavBar';
-import Layout from './components/Layout/wrapper';
-import RecipeFilter from './components/filtreRecette';
-//import { useRecettes } from './hooks/useRecettes';
-import React from 'react'
-import { Link, Outlet } from 'react-router-dom';
+import './App.css'
+import { HashRouter as Router, Routes, Route } from 'react-router';
+import Home from './Pages/Home.jsx';
+import EditPage from './Pages/EditPage.jsx';
+import NavBar from './components/Layout/NavBar.jsx';
+import { useState } from 'react'
 
-export default function App() {
+function App() {
+  const [activeCategory, setActiveCategory] = useState("all");
+  const [searchTerm, setSearchTerm] = useState("");
+
   return (
-    <>
-      <NavBar />
 
-      <Layout>
-        <Card />
-      </Layout>
+    <Router>
+      <NavBar  searchTerm ={searchTerm} setSearchTerm ={setSearchTerm} setActiveCategory={setActiveCategory} />
 
-      <RecipeFilter />
-    </>
-  );
+      <Routes>
+        <Route path="/" element={<Home searchTerm={searchTerm} activeCategory={activeCategory} setActiveCategory={setActiveCategory}/>}/>
+         <Route path="/add" element={<EditPage />}/>
+      </Routes>
+    </Router>
+
+
+
+  
+  )
 }
