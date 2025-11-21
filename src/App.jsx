@@ -12,9 +12,8 @@ function App() {
   const [searchTerm, setSearchTerm] = useState("");
 
   return (
-
-    <Router>
-      <NavBar  searchTerm ={searchTerm} setSearchTerm ={setSearchTerm} setActiveCategory={setActiveCategory} />
+    <>
+      <NavBar />
 
       <Routes>
         <Route path="/" element={<Home searchTerm={searchTerm} activeCategory={activeCategory} setActiveCategory={setActiveCategory}/>}/>
