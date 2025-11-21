@@ -1,4 +1,6 @@
-//import { useState } from 'react';
+import RecettesPage from './pages/RecettesPage.jsx';
+//import { useContext } from 'react';
+import { AppContext } from './context/appContext.jsx';
 import './App.css';
 import Card from './components/Card/Card';
 import AddRecette from './components/CrudRecette/AddRecette';
@@ -7,17 +9,18 @@ import RemoveRecette from './components/CrudRecette/RemoveRecette';
 import NavBar from './components/Layout/NavBar';
 import Layout from './components/Layout/wrapper';
 import RecipeFilter from './components/filtreRecette';
-//import { useRecettes } from './hooks/useRecettes';
 import React from 'react'
 import { Link, Outlet } from 'react-router-dom';
-import RecettesPage from './pages/RecettesPage.jsx';
 
 export default function App() {
+  //const { isDark } = useContext(AppContext);
+
+  
+  
   return (
-    <>
-
-            <RecettesPage />
-
-    </>
+      <div className="min-h-screen bg-gray-50 dark:bg-stone-900 transition-colors duration-500">
+        <RecettesPage />
+      </div>
+    
   );
 }

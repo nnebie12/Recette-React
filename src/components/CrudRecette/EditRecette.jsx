@@ -3,14 +3,14 @@ import { useState } from 'react';
 export default function EditRecette({ recette, onSave, onCancel }) {
 
   const [form, setForm] = useState({
-    title: recette?.title || '',
+    name: recette?.name || '',
     description: recette?.description || '',
     image: recette?.image || '',
-    temps: recette?.temps || '',
-    difficulte: recette?.difficulte || 'Facile',
+    preparationTime: recette?.preparationTime || '',
+    difficulty: recette?.difficulty || 'Facile',
     categorie: recette?.categorie || '',
     ingredients: recette?.ingredients || [],
-    preparation: recette?.preparation || [],   // ✅ IMPORTANT : ajout
+    preparation: recette?.preparation || [],   
     __ingredientsText: '',
     __stepText: '',
   });
@@ -71,20 +71,20 @@ export default function EditRecette({ recette, onSave, onCancel }) {
         <label className="block">
           <span className="font-medium text-gray-700">Titre</span>
           <input
-            name="title"
-            value={form.title}
+            name="name"
+            value={form.name}
             onChange={handleChange}
             className="mt-1 w-full border border-gray-300 bg-gray-50 p-3 rounded-md"
           />
         </label>
 
-        {/* DIFFICULTÉ + TEMPS */}
+        {/* DIFFICULTÉ + preparationTime */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <label className="block">
             <span className="font-medium text-gray-700">Difficulté</span>
             <select
-              name="difficulte"
-              value={form.difficulte}
+              name="difficulty"
+              value={form.difficulty}
               onChange={handleChange}
               className="mt-1 w-full border border-gray-300 bg-gray-50 p-3 rounded-md"
             >
@@ -95,11 +95,11 @@ export default function EditRecette({ recette, onSave, onCancel }) {
           </label>
 
           <label className="block">
-            <span className="font-medium text-gray-700">Temps de préparation</span>
+            <span className="font-medium text-gray-700">preparationTime de préparation</span>
             <input
-              name="temps"
+              name="preparationTime"
               type="text"
-              value={form.temps}
+              value={form.preparationTime}
               onChange={handleChange}
               className="mt-1 w-full border border-gray-300 bg-gray-50 p-3 rounded-md"
             />

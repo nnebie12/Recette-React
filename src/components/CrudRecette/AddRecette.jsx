@@ -87,7 +87,7 @@ export default function AddRecette({ addRecette: addRecetteProp }) {
 
     const newRecette = {
       id: Date.now(),
-      title: form.name,
+      name: form.name,
       ingredients: form.ingredients,
       preparation: form.preparation,
       image: form.image || null,
@@ -185,8 +185,22 @@ export default function AddRecette({ addRecette: addRecetteProp }) {
           />
         </label>
 
-        {/* DIFFICULTÉ + TEMPS */}
+        {/* DIFFICULTÉ + TEMPS + CATEGORIE */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+        <label className="block">
+              <span className="font-medium text-gray-700">Catégorie</span>
+              <select
+                name="categorie"
+                value={form.categorie}
+                onChange={handleChange}
+                className="mt-1 w-full border border-gray-300 bg-gray-50 p-3 rounded-md"
+              >
+                <option value="plats">Plats</option>
+                <option value="desserts">Desserts</option>
+                <option value="boissons">Boissons</option>
+              </select>
+          </label>
+
           <label className="block">
             <span className="font-medium text-gray-700">Difficulté</span>
             <select

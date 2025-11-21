@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client'
 import './index.css'
 import App from './App.jsx'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import { AppProvider } from './context/useAppContext'
 //import RecetteListPage from './pages/RecetteListPage'
 import RecetteDetailPage from './pages/RecetteDetailPage'
 import AddRecette from './components/CrudRecette/AddRecette'
@@ -25,6 +26,8 @@ const router = createBrowserRouter([
 const root = createRoot(document.getElementById('root'));
 root.render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <AppProvider>
+      <RouterProvider router={router} />
+    </AppProvider>
   </StrictMode>
 );

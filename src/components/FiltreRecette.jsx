@@ -28,6 +28,7 @@ export default function RecipeFilter() {
     return matchesCategory && matchesSearch;
   });
 
+  
   return (
     <div className="min-h-screen bg-gray-50 p-6">
 
@@ -100,3 +101,5 @@ export default function RecipeFilter() {
     </div>
   );
 }
+
+
