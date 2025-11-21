@@ -2,29 +2,9 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
 import App from './App.jsx'
-import { createBrowserRouter, RouterProvider } from 'react-router-dom'
-//import RecetteListPage from './pages/RecetteListPage'
-import RecetteDetailPage from './pages/RecetteDetailPage'
-import AddRecette from './components/CrudRecette/AddRecette'
 
-const router = createBrowserRouter([
-  {
-    path: '/',
-    element: <App />,      
-  },
-  {
-    path: '/ajouter',
-    element: <AddRecette />  
-  },
-  {
-    path: '/recette/:id',
-    element: <RecetteDetailPage /> 
-  }
-], { future: { v7_relativeSplatPath: true, v7_startTransition: true } });
-
-const root = createRoot(document.getElementById('root'));
-root.render(
+createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <RouterProvider router={router} />
-  </StrictMode>
-);
+    <App />
+  </StrictMode>,
+)

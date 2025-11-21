@@ -7,6 +7,7 @@ import { useNavigate, useLocation } from "react-router";
 export default function NavBar({  searchTerm, setSearchTerm, setActiveCategory}) {
   const navigate = useNavigate();
   const location = useLocation();
+  
   const handleFavoriteClick = () => {
             
     if (location.pathname !== "/") {

@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom';
+import { useParams } from 'react-router';
 import DetailRecette from '../components/RecetteDetails/DetailRecette';
 import BackButton from '../components/common/BackButton';
 import { useRecettes } from '../hooks/useRecettes';
