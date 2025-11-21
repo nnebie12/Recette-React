@@ -1,16 +1,12 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 
-// Ce hook charge les recettes depuis localStorage si présentes,
 const STORAGE_KEY = 'recettes_v1';
 
 export function useRecettes() {
-  const [recettes, setRecettes] = useState([
-    // test
-        { id: 1, title: "Tarte aux pommes", isFavorite: false },
+  const [recettes, setRecettes] = useState([]);
+  const [isLoaded, setIsLoaded] = useState(false);
 
-  ]);
-  const isInitial = useRef(true);
-
+  // Chargement initial depuis localStorage ou fetch
   useEffect(() => {
     let cancelled = false;
 
@@ -19,71 +15,78 @@ export function useRecettes() {
         const raw = localStorage.getItem(STORAGE_KEY);
         if (raw) {
           const parsed = JSON.parse(raw);
-          if (!cancelled) setRecettes(parsed);
+          if (!cancelled) {
+            setRecettes(parsed);
+            console.log('✅ Recettes chargées depuis localStorage:', parsed);
+          }
         } else {
-          // tentative de récupération d'un fichier JSON dans public/
+          // Tentative de récupération d'un fichier JSON dans public/
           try {
             const res = await fetch('/recettes.json');
             if (res.ok) {
               const data = await res.json();
-              if (!cancelled) setRecettes(data);
+              if (!cancelled) {
+                setRecettes(data);
+                console.log('✅ Recettes chargées depuis recettes.json:', data);
+              }
+            } else {
+              // Aucune donnée, initialiser avec tableau vide
+              console.log('ℹ️ Aucune recette trouvée, démarrage avec tableau vide');
+              setRecettes([]);
             }
           } catch (e) {
-            console.warn('fetch recettes.json error', e);
+            console.warn('⚠️ Erreur fetch recettes.json:', e);
+            setRecettes([]);
           }
         }
       } catch (e) {
-        console.warn('localStorage read error', e);
+        console.warn('⚠️ Erreur lecture localStorage:', e);
+        setRecettes([]);
       } finally {
-        // Fin de la phase initiale de chargement
-        isInitial.current = false;
+        if (!cancelled) {
+          setIsLoaded(true);
+          console.log('✅ Chargement terminé');
+        }
       }
     })();
 
     return () => { cancelled = true; };
   }, []);
 
-  // Sauvegarde dans localStorage après la phase initiale
+  // Sauvegarde automatique dans localStorage après chaque modification
   useEffect(() => {
-    if (isInitial.current) return;
+    if (!isLoaded) {
+      console.log('⏳ Attente fin du chargement initial...');
+      return;
+    }
+    
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(recettes));
+      console.log('💾 Recettes sauvegardées dans localStorage:', recettes);
     } catch (e) {
-      console.warn('localStorage write error', e);
+      console.error('❌ Erreur sauvegarde localStorage:', e);
     }
-  }, [recettes]);
+  }, [recettes, isLoaded]);
 
   function addRecette(r) {
-    setRecettes(prev => {
-      const next = [...prev, r];
-      try { localStorage.setItem(STORAGE_KEY, JSON.stringify(next)); } catch (e) { console.warn('localStorage write error', e); }
-      return next;
-    });
+    console.log('➕ Ajout de recette:', r);
+    setRecettes(prev => [...prev, r]);
   }
 
   function removeRecette(id) {
-    setRecettes(prev => {
-      const next = prev.filter(r => r.id !== id);
-      try { localStorage.setItem(STORAGE_KEY, JSON.stringify(next)); } catch (e) { console.warn('localStorage write error', e); }
-      return next;
-    });
+    console.log('🗑️ Suppression de recette:', id);
+    setRecettes(prev => prev.filter(r => r.id !== id));
   }
 
   function updateRecette(updated) {
-    setRecettes(prev => {
-      const next = prev.map(r => r.id === updated.id ? { ...r, ...updated } : r);
-      try { localStorage.setItem(STORAGE_KEY, JSON.stringify(next)); } catch (e) { console.warn('localStorage write error', e); }
-      return next;
-    });
+    console.log('✏️ Mise à jour de recette:', updated);
+    setRecettes(prev => prev.map(r => r.id === updated.id ? { ...r, ...updated } : r));
   }
 
   function toggleFavorite(id) {
-    setRecettes(prev => {
-      const next = prev.map(r => r.id === id ? { ...r, isFavorite: !r.isFavorite } : r);
-      try { localStorage.setItem(STORAGE_KEY, JSON.stringify(next)); } catch (e) { console.warn('localStorage write error', e); }
-      return next;
-    });
+    console.log('⭐ Toggle favori pour recette:', id);
+    setRecettes(prev => prev.map(r => r.id === id ? { ...r, isFavorite: !r.isFavorite } : r));
   }
 
-  return { recettes, addRecette, removeRecette, updateRecette, toggleFavorite };
+  return { recettes, addRecette, removeRecette, updateRecette, toggleFavorite, isLoaded };
 }

@@ -10,17 +10,14 @@ import RecipeFilter from './components/filtreRecette';
 //import { useRecettes } from './hooks/useRecettes';
 import React from 'react'
 import { Link, Outlet } from 'react-router-dom';
+import RecettesPage from './pages/RecettesPage.jsx';
 
 export default function App() {
   return (
     <>
-      <NavBar />
 
-      <Layout>
-        <Card />
-      </Layout>
+            <RecettesPage />
 
-      <RecipeFilter />
     </>
   );
 }
