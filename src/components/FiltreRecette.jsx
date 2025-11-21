@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useRecettes } from "../hooks/useRecettes"; 
 import { Plus, X, Search } from "lucide-react";
 
 export default function RecipeFilter() {
@@ -62,16 +63,12 @@ export default function RecipeFilter() {
       </div>
       {/* Filtre de catégories */}
       <div className="mb-8">
-        <h2 className="text-2xl font-bold mb-4 text-gray-800">Catégories</h2>
         <div className="flex items-center gap-4 flex-wrap">
             
           {/* Add button */}
           <button
             onClick={handleAddCategory}
-            className="flex items-center justify-center w-11 h-11 rounded-lg transition-all duration-200 hover:shadow-md active:scale-95"
-            style={{
-              backgroundColor: "var(--recipe-filter-accent)",
-            }}
+            className="flex p-0 bg-gold-custom items-center justify-center w-11 h-11 rounded-lg transition-all duration-200 hover:shadow-md active:scale-95 "
             aria-label="Add new category"
           >
             <Plus className="w-6 h-6 text-white font-bold" strokeWidth={3} />
@@ -152,7 +149,7 @@ export default function RecipeFilter() {
               value={newCategoryName}
               onChange={(e) => setNewCategoryName(e.target.value)}
               onKeyPress={(e) => e.key === "Enter" && handleCreateCategory()}
-              className="w-full px-4 py-2.5 border border-gray-200 rounded-lg mb-4 focus:outline-none focus:ring-2 focus:ring-orange-400"
+              className="w-full px-4 py-2.5 border border-gray-200 rounded-lg mb-4 focus:outline-none focus:ring-2 focus:gold-custom"
               autoFocus
             />
 
