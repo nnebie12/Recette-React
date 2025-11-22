@@ -7,7 +7,6 @@ export function useFilteredRecipes(recipes, activeCategory, searchTerm, selected
     return recipes.filter((recipe) => {
     
     if (activeCategory === "favoris") {
-
             return recipe.isFavorite === true;
     }
 
@@ -22,7 +21,7 @@ export function useFilteredRecipes(recipes, activeCategory, searchTerm, selected
       const matchesSearch =
         recipe.title.toLowerCase().includes(searchTerm.toLowerCase());
 
-      return matchesCategory && matchesSearch && matchesDifficulties;
+      return matchesCategory && matchesSearch;
     });
   }, [recipes, activeCategory, searchTerm]);
 

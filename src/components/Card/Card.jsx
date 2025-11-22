@@ -11,14 +11,13 @@ function Card() {
     {
         recettes.map (r => (
     <div key={r.id}
-        className="rounded-xl shadow-lg aspect-square max-w-50 p-3 grid gap-2 align-items-center relative overflow-hidden cursor-pointer hover:scale-105 transition-transform">
+        className="rounded-xl shadow-lg aspect-square p-3 grid gap-2 align-items-center relative overflow-hidden cursor-pointer hover:scale-105 transition-transform">
             <div
                 className="absolute inset-0 bg-cover bg-center brightness-70"
                 style={{ backgroundImage: `url(${img})` }}>
                    
             </div>
-            <a href={`/recette/${r.id}`} className="absolute inset-0 z-10"> 
-           </a>
+            <Link to={`/${r.id}`} className="absolute inset-0 z-10"/> 
             <div className="relative  text-white h-full flex flex-col justify-between text-center gap-4">
                 <div className="flex justify-end z-20">
                 <FavoriteButton 

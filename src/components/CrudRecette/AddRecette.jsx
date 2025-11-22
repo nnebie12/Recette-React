@@ -1,7 +1,6 @@
 import { useRef, useState } from 'react';
 import { useRecettes } from '../../hooks/useRecettes';
 import { useNavigate } from 'react-router';
- import NavBar from '../Layout/NavBar';
 
 
 export default function AddRecette({ addRecette: addRecetteProp }) {

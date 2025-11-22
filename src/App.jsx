@@ -19,7 +19,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home searchTerm={searchTerm} activeCategory={activeCategory} setActiveCategory={setActiveCategory}/>}/>
          <Route path="/add" element={<EditPage />}/>
-        <Route path='/recette/:id' element={<RecetteDetailPage />}/>
+        <Route path='/:id' element={<RecetteDetailPage />}/>
 
       </Routes>
     </Router>

@@ -11,11 +11,9 @@ export default function DetailRecette({ recette }) {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      { <NavBar /> }
-      <div>
-       
-      </div>
+    <>
+    
+
 
       {/* Contenu principal */}
       <div className="max-w-4xl mx-auto px-6 py-8">
@@ -85,6 +83,6 @@ export default function DetailRecette({ recette }) {
           )}
         </div>
       </div>
-    </div>
+  </>
   );
 }
