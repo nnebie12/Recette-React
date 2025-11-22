@@ -9,7 +9,7 @@ function RecetteList({ filteredRecipes, toggleFavorite}) {
                 <p className="text-center col-span-full text-gray-500">Aucune recette trouvée</p>
             ) : (                         
                 filteredRecipes.map((recipe) => (
-                    <Card key={recipe.id} recettes={recipe} toggleFavorite={toggleFavorite}/>
+                    <Card key={recipe.id} recette={recipe} toggleFavorite={toggleFavorite}/>
                 )
             ))}
         

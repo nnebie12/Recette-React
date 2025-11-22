@@ -3,14 +3,14 @@ import { useState } from 'react';
 export default function EditRecette({ recette, onSave, onCancel }) {
 
   const [form, setForm] = useState({
-    title: recette?.title || '',
+    name: recette?.name || '',
     description: recette?.description || '',
     image: recette?.image || '',
     temps: recette?.temps || '',
     difficulte: recette?.difficulte || 'Facile',
-    categorie: recette?.categorie || '',
+    category: recette?.category || '',
     ingredients: recette?.ingredients || [],
-    preparation: recette?.preparation || [],   // ✅ IMPORTANT : ajout
+    preparation: recette?.preparation || [],   
     __ingredientsText: '',
     __stepText: '',
   });
@@ -71,8 +71,8 @@ export default function EditRecette({ recette, onSave, onCancel }) {
         <label className="block">
           <span className="font-medium text-gray-700">Titre</span>
           <input
-            name="title"
-            value={form.title}
+            name="name"
+            value={form.name}
             onChange={handleChange}
             className="mt-1 w-full border border-gray-300 bg-gray-50 p-3 rounded-md"
           />

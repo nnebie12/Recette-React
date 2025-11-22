@@ -25,9 +25,9 @@ export default function RecettesPage() {
   const filteredRecettes = recettes.filter((recette) => {
     const matchesCategory = 
       activeCategory === "all" || 
-      recette.categorie?.toLowerCase() === activeCategory.toLowerCase();
+      recette.category?.toLowerCase() === activeCategory.toLowerCase();
     const matchesSearch = 
-      recette.title?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      recette.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
       recette.description?.toLowerCase().includes(searchTerm.toLowerCase());
     return matchesCategory && matchesSearch;
   });
@@ -119,7 +119,7 @@ export default function RecettesPage() {
                   <a
                     href={`/recette/${recette.id}`}
                     className="absolute inset-0 z-10"
-                    aria-label={`Voir la recette ${recette.title}`}
+                    aria-label={`Voir la recette ${recette.name}`}
                   ></a>
 
                   {/* Contenu de la card */}
@@ -134,7 +134,7 @@ export default function RecettesPage() {
 
                     {/* Titre de la recette */}
                     <h3 className="text-white grow font-bold text-lg mt-2 items-center my-auto drop-shadow-lg">
-                      {recette.title}
+                      {recette.name}
                     </h3>
                   </div>
                 </div>
