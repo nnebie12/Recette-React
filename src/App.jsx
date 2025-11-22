@@ -1,10 +1,10 @@
 import './App.css'
 import { HashRouter as Router, Routes, Route } from 'react-router';
-import Home from './Pages/Home.jsx';
-import EditPage from './Pages/EditPage.jsx';
-import NavBar from './components/Layout/NavBar.jsx';
+import Home from '../src/Pages/Home.jsx';
+import EditPage from '../src/Pages/EditPage.jsx';
+import NavBar from '../src/components/Layout/NavBar.jsx';
 import { useState } from 'react'
-import RecetteDetailPage from './pages/RecetteDetailPage'
+import RecetteDetailPage from '../src/Pages/RecetteDetailPage.jsx';
 
 
 function App() {
