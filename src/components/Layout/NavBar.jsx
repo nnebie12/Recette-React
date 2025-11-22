@@ -1,6 +1,6 @@
 import { Star, Moon} from 'lucide-react';
 import SearchBar from './SearchBar';
-import { Link } from "react-router";
+import { Link } from "react-router-dom";
 import { useNavigate, useLocation } from "react-router";
 
 

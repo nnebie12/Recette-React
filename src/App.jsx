@@ -1,5 +1,5 @@
 import './App.css'
-import { HashRouter as Router, Routes, Route } from 'react-router';
+import { HashRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from '../src/Pages/Home.jsx';
 import EditPage from '../src/Pages/EditPage.jsx';
 import NavBar from '../src/components/Layout/NavBar.jsx';

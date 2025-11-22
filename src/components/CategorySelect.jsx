@@ -1,5 +1,5 @@
 import { Plus   } from "lucide-react";
-import { Link } from "react-router";
+import { Link } from "react-router-dom";
 
 function CategorySelect({ categories, activeCategory, setActiveCategory, recipes }) {
     const getCategoryCount = (categoryId) => {

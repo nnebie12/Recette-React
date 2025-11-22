@@ -1,9 +1,9 @@
 import { useState } from 'react'
 import Layout from '../components/Layout/wrapper';  
-import RecetteList from '../components/Cards/RecetteList.jsx';
 import { useRecettes } from '../hooks/useRecettes';
 import CategorySelect from '../components/CategorySelect';
-import { useFilteredRecipes } from "../hooks/useFilterRecettes";
+import RecetteList from '../components/RecetteList/RecetteList';
+import { useFilteredRecipes } from "../hooks/useFilteredRecettes";
 
 function Home({searchTerm, activeCategory, setActiveCategory}) {
     const { recettes, toggleFavorite } = useRecettes();
