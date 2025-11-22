@@ -1,23 +1,19 @@
 import { useState } from 'react'
 import Layout from '../components/Layout/wrapper';  
-import RecetteList from '../components/Card/RecipeList';
 import { useRecettes } from '../hooks/useRecettes';
 import CategorySelect from '../components/CategorySelect';
-import { useFilteredRecipes } from "../hooks/useFilterRecettes";
+import RecetteList from '../components/RecetteList/RecetteList';
+import { useFilteredRecipes } from "../hooks/useFilteredRecettes";
 
 function Home({searchTerm, activeCategory, setActiveCategory}) {
     const { recettes, toggleFavorite } = useRecettes();
-    const [selectedDifficulty, setSelectedDifficulty] = useState("all");
+    const [, _setSelectedDifficulty] = useState("all");
 
     const filteredRecipes  = useFilteredRecipes(
         recettes,
         activeCategory,
         searchTerm
     );
-    const [difficulty] = useState([
-    { id: "1", name: "Facile"},
-    { id: "2", name: "Moyen"},
-    { id: "3", name: "Difficile"},]);
 
     const [categories] = useState([
     { id: "all", name: "Tous", count: 156 },

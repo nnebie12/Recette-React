@@ -1,6 +1,6 @@
 import Layout from '../components/Layout/wrapper';  
 
-import Addrecette from '../components/CrudRecette/Addrecette';
+import AddRecette from '../components/CrudRecette/AddRecette';
 import { useRecettes } from '../hooks/useRecettes';
 
 
@@ -12,7 +12,7 @@ function EditPage() {
     return (
         <>
             <Layout>        
-                <Addrecette addRecette={addRecette} />            
+                <AddRecette addRecette={addRecette} />            
             </Layout>
             
         </>

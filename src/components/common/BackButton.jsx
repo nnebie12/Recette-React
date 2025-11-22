@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router';
+import { useNavigate } from 'react-router-dom';
 
 export default function BackButton({ to, children, className }) {
   const navigate = useNavigate();

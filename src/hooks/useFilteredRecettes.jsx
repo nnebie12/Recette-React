@@ -23,7 +23,7 @@ export function useFilteredRecipes(recipes, activeCategory, searchTerm, selected
 
       return matchesCategory && matchesSearch;
     });
-  }, [recipes, activeCategory, searchTerm]);
+  }, [recipes, activeCategory, searchTerm, selectedDifficulty]);
 
   return filteredRecipes;
 }
