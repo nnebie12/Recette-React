@@ -5,8 +5,8 @@ import App from './App.jsx'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { AppProvider } from './context/useAppContext'
 //import RecetteListPage from './pages/RecetteListPage'
-import RecetteDetailPage from './pages/RecetteDetailPage'
-import AddRecette from './components/CrudRecette/AddRecette'
+import RecetteDetailPage from '../src/pages/RecetteDetailPage.jsx'
+import AddRecette from '../src/components/CrudRecette/AddRecette.jsx'
 
 const router = createBrowserRouter([
   {
