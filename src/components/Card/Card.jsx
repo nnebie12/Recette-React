@@ -1,7 +1,6 @@
 import img from '../../assets/imgRecette/recette1.png';
 import { useRecettes } from '../../hooks/useRecettes';
 import FavoriteButton from './FavoriteButton';
-import {Link } from 'react-router';
 
 function Card() {
     const { recettes, toggleFavorite } = useRecettes();

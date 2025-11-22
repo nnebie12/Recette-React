@@ -2,7 +2,7 @@ import { useState } from 'react'
 import Layout from '../components/Layout/wrapper';  
 import { useRecettes } from '../hooks/useRecettes';
 import CategorySelect from '../components/CategorySelect';
-import RecetteList from '../components/RecetteList/RecetteList';
+import RecetteList from '../components/Card/RecetteList';
 import { useFilteredRecipes } from "../hooks/useFilteredRecettes";
 
 function Home({searchTerm, activeCategory, setActiveCategory}) {
