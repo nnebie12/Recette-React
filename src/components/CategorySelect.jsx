@@ -1,16 +1,18 @@
 import { Plus   } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 
 function CategorySelect({ categories, activeCategory, setActiveCategory, recipes }) {
+
     const getCategoryCount = (categoryId) => {
         if (!recipes) return 0; 
 
         if (categoryId === "all") return recipes.length;
 
-        return recipes.filter(r => r.category === categoryId).length;
+        return recipes.filter(r => r.categorie === categoryId ||  r.isFavorite === true ).length;
     };
+    
     return (
-        <div className="mb-8">
+        <div className="my-10">
         <div className="flex items-center gap-4 flex-wrap">
             
           {/* Add button */}
@@ -26,7 +28,7 @@ function CategorySelect({ categories, activeCategory, setActiveCategory, recipes
           {/* Category buttons */}
           <div className="flex gap-3 flex-wrap items-center">
             {categories
-            .filter(cat => cat.id !== "favoris")
+            // .filter(cat => cat.id !== "favoris")
             .map((category) => (
               <button
                 key={category.id}

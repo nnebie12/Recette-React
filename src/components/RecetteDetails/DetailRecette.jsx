@@ -1,6 +1,6 @@
 import { Edit, Trash2 } from 'lucide-react';
 import { useMemo, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router';
 import { useRecettes } from '../../hooks/useRecettes';
 import EditRecette from '../CrudRecette/EditRecette';
 

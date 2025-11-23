@@ -1,5 +1,5 @@
 import './App.css'
-import { HashRouter as Router, Routes, Route } from 'react-router-dom';
+import { HashRouter as Router, Routes, Route } from 'react-router';
 import Home from '../src/Pages/Home.jsx';
 import EditPage from '../src/Pages/EditPage.jsx';
 import NavBar from '../src/components/Layout/NavBar.jsx';
@@ -11,16 +11,17 @@ function App() {
   const [activeCategory, setActiveCategory] = useState("all");
   const [searchTerm, setSearchTerm] = useState("");
 
+  
+
   return (
 
     <Router>
-      <NavBar  searchTerm ={searchTerm} setSearchTerm ={setSearchTerm} setActiveCategory={setActiveCategory} />
+      <NavBar  searchTerm ={searchTerm} setSearchTerm = {setSearchTerm} setActiveCategory={setActiveCategory} activeCategory={activeCategory}/>
 
       <Routes>
         <Route path="/" element={<Home searchTerm={searchTerm} activeCategory={activeCategory} setActiveCategory={setActiveCategory}/>}/>
-         <Route path="/add" element={<EditPage />}/>
-        <Route path='/:id' element={<RecetteDetailPage />}/>
-
+        <Route path="/add" element={<EditPage />}/>
+        <Route path='/recette/:id' element={<RecetteDetailPage />}/>
       </Routes>
     </Router>
 

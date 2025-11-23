@@ -1,10 +1,10 @@
 import { Star, Moon} from 'lucide-react';
 import SearchBar from './SearchBar';
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 import { useNavigate, useLocation } from "react-router";
 
 
-export default function NavBar({  searchTerm, setSearchTerm, setActiveCategory}) {
+export default function NavBar({  searchTerm, setSearchTerm, activeCategory, setActiveCategory}) {
   const navigate = useNavigate();
   const location = useLocation();
   
@@ -17,7 +17,7 @@ export default function NavBar({  searchTerm, setSearchTerm, setActiveCategory})
 
   }
   return (
-    <nav className="bg-white p-4 text-white shadow-xl w-full">
+    <nav className="bg-white p-4 text-white shadow-lg w-full">
       <div className="container mx-auto flex justify-between items-center max-w-screen-xl space-x-4">
         <Link to="/">
         <div>
@@ -33,7 +33,7 @@ export default function NavBar({  searchTerm, setSearchTerm, setActiveCategory})
             onClick={handleFavoriteClick}
             className="bg-gold-custom w-10 h-10 rounded-full flex justify-center cursor-pointer">
             <Star className="text-white w-4 my-auto"
-            fill="currentColor" 
+            fill={activeCategory === 'favoris' ? "currentColor" : "none"} 
               />
           </span>
           <span className="bg-stone-950 w-10 h-10 rounded-full flex justify-center cursor-pointer">

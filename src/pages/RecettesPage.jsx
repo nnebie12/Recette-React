@@ -1,6 +1,6 @@
 import { useState, useContext } from "react";
 import { Plus } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 import { useRecettes } from '../hooks/useRecettes';
 import FavoriteButton from '../components/Card/FavoriteButton';
 import NavBar from '../components/Layout/NavBar';

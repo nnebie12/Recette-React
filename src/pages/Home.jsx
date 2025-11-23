@@ -16,10 +16,10 @@ function Home({searchTerm, activeCategory, setActiveCategory}) {
     );
 
     const [categories] = useState([
-    { id: "all", name: "Tous", count: 156 },
-    { id: "desserts", name: "Dessert", count: 103 },
-    { id: "drinks", name: "Boissons", count: 87 },
-    { id: "favoris", name: "favoris", count: 87 },
+    { id: "all", name: "Tous" },
+    { id: "desserts", name: "Dessert" },
+    { id: "drinks", name: "Boissons" },
+    { id: "favoris", name: "favoris"},
   ]);
 
      

@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react';
 import { useRecettes } from '../../hooks/useRecettes';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 import NavBar from '../Layout/NavBar';
 
 export default function AddRecette({ addRecette: addRecetteProp }) {
@@ -120,8 +120,6 @@ export default function AddRecette({ addRecette: addRecetteProp }) {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-stone-900 transition-colors duration-500">
-      <NavBar />
       
       <div className="min-h-screen bg-gray-50 dark:bg-stone-900 py-10 px-4 transition-colors duration-500">
         {toast && (
@@ -370,6 +368,5 @@ export default function AddRecette({ addRecette: addRecetteProp }) {
           </button>
         </form>
       </div>
-    </div>
   );
 }
