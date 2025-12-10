@@ -3,6 +3,8 @@ import { useMemo, useState } from 'react';
 import { useNavigate, useParams } from 'react-router';
 import { useRecettes } from '../../hooks/useRecettes';
 import EditRecette from '../CrudRecette/EditRecette';
+import Modal from '../common/Modal';
+import ConfirmModal from '../common/ConfirmModal';
 
 export default function DetailRecette() {
   const { id } = useParams();
@@ -18,17 +20,23 @@ export default function DetailRecette() {
   // Gestion de la sauvegarde après édition
   function handleSave(updatedRecette) {
     const recetteFormatee = {
-      ...updatedRecette,
-      id: recette.id, // S'assurer que l'ID est préservé
-      name: updatedRecette.name || updatedRecette.name,
-      preparationTime: updatedRecette.preparationTime || updatedRecette.temps,
-      difficulty: updatedRecette.difficulty || updatedRecette.difficulte,
-      ingredients: updatedRecette.ingredients || [],
-      preparation: updatedRecette.preparation || [],
-      description: updatedRecette.description || '',
-      image: updatedRecette.image || null,
-      __ingredientsText: updatedRecette.__ingredientsText || '',
-      __stepText: updatedRecette.__stepText || '',
+      ...recette,
+      id: recette.id, // preserve original ID
+      // Prefer explicit updated fields; fall back to existing recette values
+      name: updatedRecette.name ?? recette.name ?? '',
+      preparationTime: updatedRecette.preparationTime ?? recette.preparationTime ?? '',
+      difficulty: updatedRecette.difficulty ?? recette.difficulty ?? '',
+      // Ensure arrays remain arrays; if updated value isn't provided, keep existing or default to []
+      ingredients: Array.isArray(updatedRecette.ingredients)
+        ? updatedRecette.ingredients
+        : recette.ingredients ?? [],
+      preparation: Array.isArray(updatedRecette.preparation)
+        ? updatedRecette.preparation
+        : recette.preparation ?? [],
+      description: updatedRecette.description ?? recette.description ?? '',
+      image: updatedRecette.image ?? recette.image ?? null,
+      __ingredientsText: updatedRecette.__ingredientsText ?? recette.__ingredientsText ?? '',
+      __stepText: updatedRecette.__stepText ?? recette.__stepText ?? '',
     };
     
     updateRecette(recetteFormatee);
@@ -170,61 +178,34 @@ export default function DetailRecette() {
       </div>
 
       {/* Modal d'édition */}
-      {showEditModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-lg max-w-3xl w-full max-h-[90vh] overflow-y-auto">
-            <div className="sticky top-0 bg-white border-b px-6 py-4 flex justify-between items-center">
-              <h2 className="text-2xl font-bold text-gray-900">Modifier la recette</h2>
-              <button
-                onClick={() => setShowEditModal(false)}
-                className="text-gray-500 hover:text-gray-700 text-3xl leading-none"
-              >
-                ×
-              </button>
-            </div>
-            <div className="p-6">
-              <EditRecette
-                recette={{
-                  ...recette,
-                  name: recette.name || recette.name,
-                  preparationTime: recette.preparationTime,
-                  difficulty: recette.difficulty,
-                }}
-                onSave={handleSave}
-                onCancel={() => setShowEditModal(false)}
-              />
-            </div>
-          </div>
-        </div>
-      )}
+      <Modal 
+        isOpen={showEditModal} 
+        title="Modifier la recette"
+        onClose={() => setShowEditModal(false)}
+      >
+        <EditRecette
+          recette={{
+            ...recette,
+            name: recette.name || recette.name,
+            preparationTime: recette.preparationTime,
+            difficulty: recette.difficulty,
+          }}
+          onSave={handleSave}
+          onCancel={() => setShowEditModal(false)}
+        />
+      </Modal>
 
       {/* Modal de confirmation de suppression */}
-      {showDeleteConfirm && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-lg max-w-md w-full p-6">
-            <h3 className="text-xl font-bold text-gray-900 mb-4">
-              Confirmer la suppression
-            </h3>
-            <p className="text-gray-700 mb-6">
-              Êtes-vous sûr de vouloir supprimer la recette <strong>"{recette.name || recette.name}"</strong> ? Cette action est irréversible.
-            </p>
-            <div className="flex gap-3 justify-end">
-              <button
-                onClick={() => setShowDeleteConfirm(false)}
-                className="px-4 py-2 border border-gray-300 rounded-md hover:bg-gray-100 transition"
-              >
-                Annuler
-              </button>
-              <button
-                onClick={handleDelete}
-                className="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition"
-              >
-                Supprimer définitivement
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+      <ConfirmModal
+        isOpen={showDeleteConfirm}
+        title="Confirmer la suppression"
+        message={`Êtes-vous sûr de vouloir supprimer la recette "${recette.name || recette.name}" ? Cette action est irréversible.`}
+        onConfirm={handleDelete}
+        onCancel={() => setShowDeleteConfirm(false)}
+        confirmLabel="Supprimer définitivement"
+        cancelLabel="Annuler"
+        isDangerous={true}
+      />
     </div>
   );
 }
