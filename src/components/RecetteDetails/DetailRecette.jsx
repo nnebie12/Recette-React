@@ -18,17 +18,23 @@ export default function DetailRecette() {
   // Gestion de la sauvegarde après édition
   function handleSave(updatedRecette) {
     const recetteFormatee = {
-      ...updatedRecette,
-      id: recette.id, // S'assurer que l'ID est préservé
-      name: updatedRecette.name || updatedRecette.name,
-      preparationTime: updatedRecette.preparationTime || updatedRecette.temps,
-      difficulty: updatedRecette.difficulty || updatedRecette.difficulte,
-      ingredients: updatedRecette.ingredients || [],
-      preparation: updatedRecette.preparation || [],
-      description: updatedRecette.description || '',
-      image: updatedRecette.image || null,
-      __ingredientsText: updatedRecette.__ingredientsText || '',
-      __stepText: updatedRecette.__stepText || '',
+      ...recette,
+      id: recette.id, // preserve original ID
+      // Prefer explicit updated fields; fall back to existing recette values
+      name: updatedRecette.name ?? recette.name ?? '',
+      preparationTime: updatedRecette.preparationTime ?? recette.preparationTime ?? '',
+      difficulty: updatedRecette.difficulty ?? recette.difficulty ?? '',
+      // Ensure arrays remain arrays; if updated value isn't provided, keep existing or default to []
+      ingredients: Array.isArray(updatedRecette.ingredients)
+        ? updatedRecette.ingredients
+        : recette.ingredients ?? [],
+      preparation: Array.isArray(updatedRecette.preparation)
+        ? updatedRecette.preparation
+        : recette.preparation ?? [],
+      description: updatedRecette.description ?? recette.description ?? '',
+      image: updatedRecette.image ?? recette.image ?? null,
+      __ingredientsText: updatedRecette.__ingredientsText ?? recette.__ingredientsText ?? '',
+      __stepText: updatedRecette.__stepText ?? recette.__stepText ?? '',
     };
     
     updateRecette(recetteFormatee);
