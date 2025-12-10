@@ -147,7 +147,7 @@ export default function DetailRecette() {
         </div>
 
         {/* Boutons Modifier et Supprimer (seulement pour recettes utilisateur) */}
-        {!isInitialRecette && (
+        {isInitialRecette && (
           <div className="flex justify-end gap-3 mt-12 pt-6 border-t border-gray-200">
             <button
               onClick={() => setShowEditModal(true)}

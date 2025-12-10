@@ -14,13 +14,7 @@ export default function RecipeFilter() {
   const [activeCategory, setActiveCategory] = useState("all");
   const [searchTerm] = useState("");
 
-  const [recipes] = useState([
-    { id: 1, name: "Gâteau au Chocolat", category: "desserts", image: "🍰", description: "Délicieux gâteau moelleux" },
-    { id: 2, name: "Tarte aux Pommes", category: "desserts", image: "🥧", description: "Tarte classique et savoureuse" },
-    { id: 3, name: "Jus d'Orange", category: "drinks", image: "🧃", description: "Jus frais pressé" },
-    { id: 4, name: "Smoothie Fraise", category: "drinks", image: "🍓", description: "Smoothie vitaminé" },
-    { id: 5, name: "Salade César", category: "all", image: "🥗", description: "Salade fraîche et croquante" },
-  ]);
+
 
   const filteredRecipes = recipes.filter((recipe) => {
     const matchesCategory = activeCategory === "all" || recipe.category === activeCategory;
