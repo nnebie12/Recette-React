@@ -30,17 +30,18 @@ export default function AddRecette({ addRecette: addRecetteProp }) {
   }
 
   function handleSubmit(e) {
-    e.preventDefault();
+  e.preventDefault();
 
-    addRecette({
-      id: Date.now(),
-      ...formData,
-      isFavorite: false,
-    });
+  addRecette({
+    id: crypto.randomUUID(),
+    ...formData,
+    isFavorite: false,
+  });
 
-    setToast('Recette créée');
-    setTimeout(() => navigate('/'), 1200);
-  }
+  setToast('Recette créée');
+  setTimeout(() => navigate('/'), 1200);
+ }
+
 
   return (
     <div className="min-h-screen py-10 px-4">
