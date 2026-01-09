@@ -1,27 +1,33 @@
-import { useState } from "react";
+import { useState } from 'react';
 
-export default function IngredientInput({ onAdd }) {
-  const [text, setText] = useState("");
+const SUGGESTIONS = ['Tomate', 'Oignon', 'Ail', 'Sel'];
 
-  const handleAdd = () => {
-    if (!text.trim()) return;
+export default function IngredientsInput({ ingredients, onChange }) {
+  const [text, setText] = useState('');
+  const [show, setShow] = useState(false);
 
-    onAdd(text.trim());
-    setText("");
-  };
+  function addIngredient(value) {
+    onChange([...new Set([...ingredients, value])]);
+    setText('');
+    setShow(false);
+  }
+
+  function removeIngredient(value) {
+    onChange(ingredients.filter(i => i !== value));
+  }
 
   return (
-    <div className="flex gap-2">
-      <input
-        type="text"
-        className="form-input"
-        placeholder="Ajouter un ingrédient"
-        value={text}
-        onChange={(e) => setText(e.target.value)}
-      />
-      <button type="button" className="btn-secondary" onClick={handleAdd}>
-        Ajouter
-      </button>
+    <div>
+      <input value={text} onChange={e => setText(e.target.value)} />
+      <button type="button" onClick={() => setShow(!show)}>+</button>
+
+      {ingredients.map(i => (
+        <span key={i} onClick={() => removeIngredient(i)}>× {i}</span>
+      ))}
+
+      {show && SUGGESTIONS.map(s => (
+        <button key={s} onClick={() => addIngredient(s)}>{s}</button>
+      ))}
     </div>
   );
 }
